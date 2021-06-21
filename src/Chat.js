@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 
 function getSocket() {
-    const socketPath = "ws://localhost:8080/ws?name=alex";
+    const socketPath = "ws://localhost:8080/ws?id=3";
     const chatSocket = new WebSocket(socketPath,); 
     return chatSocket;   
 }
@@ -29,8 +29,12 @@ class Chat extends Component {
         this.handleRoomJoined = this.handleRoomJoined.bind(this);
         this.findRoom = this.findRoom.bind(this);
         this.leaveRoom = this.leaveRoom.bind(this);
+        this.disconnect = this.disconnect.bind(this);
     }
-
+    disconnect(e){
+      e.preventDefault();
+      this.chatSocket.close();
+    }
     componentDidMount(){
       this.chatSocket.addEventListener('open', (event) => { this.onWebsocketOpen(event) });
         this.chatSocket.addEventListener('message', (event) => { this.handleNewMessage(event) });
@@ -134,43 +138,9 @@ class Chat extends Component {
 
     render(){
     return(   <div class="container h-100">
-    <div class="row justify-content-center h-100">
-      <div class="col-12 form" >
-          <div class="input-group">
-            <input
-              class="form-control name"
-              placeholder="Please fill in your (nick)name"
-            />
-            <div class="input-group-append">
-              <span class="input-group-text send_btn" >
-              
-              </span>
-            </div>
-        </div>
-      </div>
-
-      <div class="col-12 room" >
-        <div class="input-group">
-          <input
-            class="form-control name"
-            placeholder="Type the room you want to join"
-          />
-          <div class="input-group-append">
-            <span class="input-group-text send_btn" onClick={this.joinRoom}>
-                join room
-            </span>
-          </div>
-        </div>
-      </div>
-
+    <div class="row justify-content-center h-100">  
       <div class="chat" >
         <div class="card">
-          <div class="card-header msg_head">
-            <div class="d-flex bd-highlight justify-content-center">
-              room name
-              <span class="card-close" onClick={this.leaveRoom}>leave</span>
-            </div>
-          </div>
           <div class="card-body msg_card_body">
             <div class="d-flex justify-content-start mb-4">
               <div class="msg_cotainer">
@@ -191,6 +161,7 @@ class Chat extends Component {
                 <span class="input-group-text send_btn" onClick={this.sendMessage}>send message</span
                 >
               </div>
+              <button type="button" class="btn btn-primary" onClick={(e) => this.disconnect(e)}>close</button>
             </div>
           </div>
         </div>
