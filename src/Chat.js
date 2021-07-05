@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 
-function getSocket() {
-    const socketPath = "ws://localhost:8080/ws?id=3";
+function getSocket(id) {
+    const socketPath = "ws://localhost:8080/ws?id=" + id;
     const chatSocket = new WebSocket(socketPath,); 
     return chatSocket;   
 }
@@ -16,8 +16,10 @@ class Chat extends Component {
             roomInput: "alex room",
             textMessage: "",
             users: [],
+            user_id: 1,
+            target: props.location.state.ID
         };
-        this.chatSocket = getSocket();
+        this.chatSocket = getSocket(this.state.user_id);
         console.log(this.chatSocket);
       
         this.joinRoom = this.joinRoom.bind(this);
@@ -42,6 +44,7 @@ class Chat extends Component {
 
     onWebsocketOpen(event) {
         console.log("connected to WS!");
+        console.log(this.state.target);
     }
 
     handleNewMessage(event) {
@@ -81,7 +84,7 @@ class Chat extends Component {
     }
     handleUserLeft(msg) {
       for (let i = 0; i < this.state.users.length; i++) {
-        if (this.users[i].id == msg.sender.id) {
+        if (this.users[i].id === msg.sender.id) {
           this.users.splice(i, 1);
         }
       }
