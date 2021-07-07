@@ -31,6 +31,7 @@ class Chat extends Component {
         this.handleRoomJoined = this.handleRoomJoined.bind(this);
         this.findRoom = this.findRoom.bind(this);
         this.leaveRoom = this.leaveRoom.bind(this);
+        this.sendPrivateMessage = this.sendPrivateMessage.bind(this);
         this.disconnect = this.disconnect.bind(this);
     }
     disconnect(e){
@@ -95,6 +96,16 @@ class Chat extends Component {
       room["messages"] = [];
       this.state.rooms.push(room);
       console.log(this.state.rooms)
+    }
+    sendPrivateMessage(){
+      if (this.state.textMessage !== "") {
+        this.chatSocket.send(JSON.stringify({
+          action: 'private-message',
+          message: this.state.textMessage,
+          receiver: this.state.target,
+        }));
+        //room.newMessage = "";
+      }
     }
     sendMessage() {
       if (this.state.textMessage !== "") {
@@ -161,7 +172,7 @@ class Chat extends Component {
                 onChange={this.handleInputChange}
               ></textarea>
               <div class="input-group-append">
-                <span class="input-group-text send_btn" onClick={this.sendMessage}>send message</span
+                <span class="input-group-text send_btn" onClick={this.sendPrivateMessage}>send message</span
                 >
               </div>
               <button type="button" class="btn btn-primary" onClick={(e) => this.disconnect(e)}>close</button>
