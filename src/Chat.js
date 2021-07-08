@@ -16,7 +16,7 @@ class Chat extends Component {
             roomInput: "alex room",
             textMessage: "",
             users: [],
-            user_id: 1,
+            user_id: props.location.state.user_ID,
             target: props.location.state.ID
         };
         this.chatSocket = getSocket(this.state.user_id);

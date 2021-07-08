@@ -7,12 +7,17 @@ const Users = () =>{
     const [users, setUsers] = useState([]);
     const [redirect, setRedirect] = useState(false);
     const [id, setId] = useState();
+    const [user, setUser] = useState("");
 
     function sendToChat(event, ID){
         event.preventDefault();
         setId(ID);
         setRedirect(true);
 
+    }
+    function handleChange(e){
+        setUser(user => e.target.value)
+        console.log(user)
     }
 
     useEffect(()=>{
@@ -28,7 +33,7 @@ const Users = () =>{
     );
 
     if(redirect){
-        return <Redirect to={{pathname:"/chat", state:{ID: id}}}/>;
+        return <Redirect to={{pathname:"/chat", state:{ID: id, user_ID: user}}}/>;
     }
 
     return (
@@ -48,6 +53,8 @@ const Users = () =>{
                     }
                 )
             }
+
+            <input type="text" value={user} onChange={(e) => handleChange(e)}></input>
 
         </div>
     )
