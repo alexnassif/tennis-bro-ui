@@ -28,9 +28,7 @@ const Users = () =>{
         };
         fetchUsers();
 
-    }, []
-
-    );
+    }, []);
 
     if(redirect){
         return <Redirect to={{pathname:"/chat", state:{ID: id, user_ID: user}}}/>;

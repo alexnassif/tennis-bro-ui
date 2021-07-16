@@ -68,6 +68,9 @@ class Chat extends Component {
           case "room-joined":
             this.handleRoomJoined(msg);
             break;
+          case "private-message":
+            console.log(msg);
+            break;
           default:
             break;
         }
