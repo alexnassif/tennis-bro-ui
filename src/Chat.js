@@ -20,7 +20,6 @@ class Chat extends Component {
             target: props.location.state.ID
         };
         this.chatSocket = getSocket(this.state.user_id);
-        console.log(this.chatSocket);
       
         this.joinRoom = this.joinRoom.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);

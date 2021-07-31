@@ -31,8 +31,7 @@ const LoginPage = () => {
         }
         AuthService.login(credentials)
             .then(function (response) {
-                //setToken('tennisbro-token', response.data)
-                console.log(response.data);
+                setToken('tennisbro-token', response.data)
             }).catch(function (error) {
             alert(error);
         });

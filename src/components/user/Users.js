@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router';
+import { useCookies } from "react-cookie"
 
 
 const Users = () =>{
@@ -8,6 +9,7 @@ const Users = () =>{
     const [redirect, setRedirect] = useState(false);
     const [id, setId] = useState();
     const [user, setUser] = useState("");
+    const [token] = useCookies(['tennisbro-token'])
 
     function sendToChat(event, ID){
         event.preventDefault();
@@ -17,14 +19,15 @@ const Users = () =>{
     }
     function handleChange(e){
         setUser(user => e.target.value)
-        console.log(user)
     }
 
     useEffect(()=>{
+        if(!token['tennisbro-token']) {
+            window.location.href = '/';
+        } 
         const fetchUsers = async () => {
-            const result = await axios('http://localhost:8080/user-api/user');
+            const result = await axios("http://localhost:8080/user-api/user");
             setUsers(result.data);
-            console.log(result.data);
         };
         fetchUsers();
 
