@@ -34,7 +34,7 @@ const Users = () =>{
     }, []);
 
     if(redirect){
-        return <Redirect to={{pathname:"/chat", state:{ID: id, user_ID: user}}}/>;
+        return <Redirect to={{pathname:"/chat", state:{ID: id, user_ID: token['tennisbro-token']}}}/>;
     }
 
     return (

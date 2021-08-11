@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 
-function getSocket(id) {
-    const socketPath = "ws://localhost:8080/ws?id=" + id;
+function getSocket(token) {
+    const socketPath = "ws://localhost:8080/ws?bearer=" + token;
     const chatSocket = new WebSocket(socketPath,); 
     return chatSocket;   
 }
@@ -16,10 +16,10 @@ class Chat extends Component {
             roomInput: "alex room",
             textMessage: "",
             users: [],
-            user_id: props.location.state.user_ID,
+            token: props.location.state.user_ID,
             target: props.location.state.ID
         };
-        this.chatSocket = getSocket(this.state.user_id);
+        this.chatSocket = getSocket(this.state.token);
       
         this.joinRoom = this.joinRoom.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
