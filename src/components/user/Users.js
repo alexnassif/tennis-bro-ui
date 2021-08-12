@@ -17,13 +17,10 @@ const Users = () =>{
         setRedirect(true);
 
     }
-    function handleChange(e){
-        setUser(user => e.target.value)
-    }
 
     useEffect(()=>{
         if(!token['tennisbro-token']) {
-            window.location.href = '/';
+            window.location.href = '/login';
         } 
         const fetchUsers = async () => {
             const result = await axios("http://localhost:8080/user-api/user");
@@ -54,9 +51,6 @@ const Users = () =>{
                     }
                 )
             }
-
-            <input type="text" value={user} onChange={(e) => handleChange(e)}></input>
-
         </div>
     )
 
