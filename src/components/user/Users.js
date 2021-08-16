@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router';
-import { useCookies } from "react-cookie"
+import { useCookies } from "react-cookie";
 
 
 const Users = () =>{
