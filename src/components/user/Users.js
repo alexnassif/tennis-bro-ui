@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router';
 import { useCookies } from "react-cookie";
+import UserService from '../services/UserService';
 
 
 const Users = () =>{
@@ -22,6 +23,13 @@ const Users = () =>{
         if(!token['tennisbro-token']) {
             window.location.href = '/login';
         } 
+       /* UserService.getUsers(token)
+        .then((result)=>{
+            setUsers(result.data);
+        })
+        .catch((err)=>{
+            console.log(err);
+        })*/
         const fetchUsers = async () => {
             const result = await axios("http://localhost:8080/user-api/user");
             setUsers(result.data);
@@ -29,6 +37,7 @@ const Users = () =>{
         fetchUsers();
 
     }, []);
+
 
     if(redirect){
         return <Redirect to={{pathname:"/chat", state:{ID: id, user_ID: token['tennisbro-token']}}}/>;

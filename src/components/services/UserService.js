@@ -2,6 +2,9 @@ import axios from 'axios';
 
 class UserService {
 
+    getUsers(token){
+        return axios("http://localhost:8080/user-api/user/")
+    }
     create(data){
         return axios.post("http://localhost:8080/user-api/user", data)
     }
