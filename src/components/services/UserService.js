@@ -3,7 +3,11 @@ import axios from 'axios';
 class UserService {
 
     getUsers(token){
-        return axios("http://localhost:8080/user-api/user/")
+        return axios.get("http://localhost:8080/user-api/user", {},{
+            headers: {
+                'Authorization': `Token ${token}`
+            }
+        })
     }
     create(data){
         return axios.post("http://localhost:8080/user-api/user", data)

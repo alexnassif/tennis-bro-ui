@@ -23,18 +23,18 @@ const Users = () =>{
         if(!token['tennisbro-token']) {
             window.location.href = '/login';
         } 
-       /* UserService.getUsers(token)
+       UserService.getUsers(token)
         .then((result)=>{
             setUsers(result.data);
         })
         .catch((err)=>{
             console.log(err);
-        })*/
-        const fetchUsers = async () => {
+        })
+        /*const fetchUsers = async () => {
             const result = await axios("http://localhost:8080/user-api/user");
             setUsers(result.data);
         };
-        fetchUsers();
+        fetchUsers();*/
 
     }, []);
 
