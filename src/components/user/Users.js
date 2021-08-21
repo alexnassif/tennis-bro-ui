@@ -23,7 +23,7 @@ const Users = () =>{
         if(!token['tennisbro-token']) {
             window.location.href = '/login';
         } 
-       UserService.getUsers(token)
+       UserService.getUsers(token['tennisbro-token'])
         .then((result)=>{
             setUsers(result.data);
         })

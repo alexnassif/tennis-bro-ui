@@ -3,9 +3,9 @@ import axios from 'axios';
 class UserService {
 
     getUsers(token){
-        return axios.get("http://localhost:8080/user-api/user", {},{
+        return axios.get("http://localhost:8080/user-api/user", {
             headers: {
-                'Authorization': `Token ${token}`
+                Authorization: `Bearer ${token}`,
             }
         })
     }
