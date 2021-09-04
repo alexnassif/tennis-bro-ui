@@ -84,7 +84,7 @@ const LoginPage = () => {
                                 <button className="btn btn-lg btn-primary btn-block mt-3" type="submit">Sign in</button>
                             </div>
                             </form>
-                            <p className="mt-3">Don't have an account? Register <span><Link to="/">here</Link></span></p>
+                            <p className="mt-3">Don't have an account? Register <span><Link to="/register">here</Link></span></p>
 
                         </div> 
                     </div>
