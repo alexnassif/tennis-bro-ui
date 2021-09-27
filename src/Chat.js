@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MessageService from './components/services/MessageService';
 
 
 function getSocket(token) {
@@ -17,7 +18,8 @@ class Chat extends Component {
             textMessage: "",
             users: [],
             token: props.location.state.user_ID,
-            target: props.location.state.ID
+            target: props.location.state.ID,
+            messages: []
         };
         this.chatSocket = getSocket(this.state.token);
       
@@ -32,6 +34,7 @@ class Chat extends Component {
         this.leaveRoom = this.leaveRoom.bind(this);
         this.sendPrivateMessage = this.sendPrivateMessage.bind(this);
         this.disconnect = this.disconnect.bind(this);
+        this.getMessagesBetweenUsers = this.getMessagesBetweenUsers.bind(this);
     }
     disconnect(e){
       e.preventDefault();
@@ -45,6 +48,10 @@ class Chat extends Component {
     onWebsocketOpen(event) {
         console.log("connected to WS!");
         console.log(this.state.target);
+    }
+
+    getMessagesBetweenUsers(){
+        MessageService.getMessagesBetweenUsers()
     }
 
     handleNewMessage(event) {
