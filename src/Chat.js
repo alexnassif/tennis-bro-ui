@@ -51,7 +51,13 @@ class Chat extends Component {
     }
 
     getMessagesBetweenUsers(){
-        MessageService.getMessagesBetweenUsers()
+        MessageService.getMessagesBetweenUsers(this.state.token)
+        .then(function (data) {
+          console.log(data)
+          
+        }).catch(function (err) {
+          console.log(err)
+        });
     }
 
     handleNewMessage(event) {

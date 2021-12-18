@@ -2,7 +2,7 @@
 import './App.css';
 import Users from './components/user/Users'; 
 import LoginPage from './components/user/Login';
-import Chat from './Chat';
+import Chat from "./components/chat/ChatBox";
 import {BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import React from 'react';
 import Registration from './components/user/Registration';

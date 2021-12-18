@@ -1,12 +1,11 @@
 import axios from 'axios';
-import { useCookies } from "react-cookie";
 
 class MessageService {
 
-    getMessagesBetweenUsers(sender, recipient){
+    getMessagesBetweenUsers(sender, recipient, token){
         return axios.get(`http://localhost:8080/message-api/messages/${sender}/${recipient}`, {
             headers: {
-                Authorization: `Bearer ${useCookies(['tennisbro-token'])}`,
+                Authorization: `Bearer ${token})}`,
             }
         })
     }
