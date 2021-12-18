@@ -7,18 +7,16 @@ import MessagesList from "./MessagesList";
 import "../../styling/messages.css";
 
 
-const Chat = ({username, messages}) => {
-    const [id] = useCookies(['user_id']);
-    const [profileId] = useCookies(['profile_id']);
+const Chat = ({messages, username}) => {
+    //const [id] = useCookies(['user_id']);
     const [token, , deleteToken] = useCookies(['synkup-token']);
-    return <ChatBox messages={messages} username={username} token={token['synkup-token']} userId={id['user_id']}
-                    profileId={profileId['profile_id']}/>
+   const recipient = null;
+    return <ChatBox messages={messages} username={username} token={token['tennisbro-token']} 
+                    recipient={recipient}/>
 }
 
-function getSocket() {
-
-    const socketPath = `ws://localhost:8000/ws`;
-
+function getSocket(token) {
+    const socketPath = "ws://localhost:8080/ws?bearer=" + token;
     const chatSocket = new WebSocket(
         socketPath,
     );

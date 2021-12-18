@@ -7,7 +7,7 @@ import http from "../../http-axios";
 
 
 const DialogList = (props) => {
-    const [token] = useCookies(['synkup-token']);
+    const [token] = useCookies(['tennisbro-token']);
     const [id] = useCookies(['user_id']);
     const [profileId] = useCookies(['profile_id']);
     const [dialogs, setDialogs] = useState([]);
@@ -19,32 +19,34 @@ const DialogList = (props) => {
     useEffect(() => {
 
         if(props.location.state !== undefined){
-            setUserName(props.location.state.username);
-            fetchMessages(props.location.state.username);
+            setUserName(props.location.state.ID);
+            fetchMessages(props.location.state.user_ID);
         }
-        ChatService.getDialogs(token['synkup-token']).then(
+        ChatService.getDialogs(token['tennisbro-token']).then(
             function (response) {
-                setDialogs(response.data);
+                console.log(response.data);
+                //setDialogs(response.data);
             }
         ).catch(function (err) {
             console.log(err);
         })
     }, [])
 
-    function fetchMessages(username) {
+    function fetchMessages(id) {
         setMessages([]);
-        http.get(`http://127.0.0.1:8000/chatapi/message/?target=${username}`, {
+        http.get(`localhost:8080/room-api/rooms/${id}`, {
             headers: {
-                'Authorization': `Token ${token['synkup-token']}`
+                'Authorization': `Token ${token['tennisbro-token']}`
             }
         }).then(
             function (response) {
-                for (const m of response.data) {
+                console.log(response.data);
+                /*for (const m of response.data) {
                     const mDate = new Date(m.timestamp);
                     let message = {user: m.user, text: m.body, date: mDate.toDateString(), time: mDate.toLocaleTimeString(), recipient: m.recipient};
                     setMessages(messages => [...messages, message])
                 }
-                setChat(true);
+                setChat(true);*/
             }
         ).catch(
             function (err) {
@@ -59,13 +61,13 @@ const DialogList = (props) => {
             <div className="row">
                 <div className="col-md-4">
                     <ul className="users">
-                        {dialogs.map((dialog) => {
+                        {/* {dialogs.map((dialog) => {
                                 return (
                                     <Dialog key={dialog.id} dialog={dialog} currentUser={id['user_id']} setChat={setChat}
                                             setUserName={setUserName} fetchMessages={fetchMessages}/>
                                 )
                             }
-                        )}
+                        )} */}
                     </ul>
                 </div>
 
