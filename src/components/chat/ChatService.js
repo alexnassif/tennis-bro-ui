@@ -5,7 +5,7 @@ const cookies = new Cookies();
 class ChatService {
 
     getDialogs(token, id) {
-        return http.get('/room-api/rooms/8', {
+        return http.get('/room-api/rooms', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

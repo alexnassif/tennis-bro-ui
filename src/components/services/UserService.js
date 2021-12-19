@@ -18,6 +18,13 @@ class UserService {
     checkEmail(data){
 
     }
+    getUser(token){
+        return axios.get("http://localhost:8080/user-api/me", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        })
+    }
 }
 
 export default new UserService();

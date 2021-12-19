@@ -4,21 +4,25 @@ import ChatService from "./ChatService";
 
 
 function Dialog({dialog, currentUser, setChat, setUserName, fetchMessages}) {
-    const {user1, user2} = dialog;
+    const {User1, User2} = dialog;
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        if (user1.id === parseInt(currentUser)) {
-            setUser(user2);
+
+        console.log(currentUser);
+        if (User1.ID === parseInt(currentUser)) {
+            
+            setUser(User2);
+            
         } else {
-            setUser(user1);
+            setUser(User1);
         }
     }, [])
 
     function showChat() {
         setChat(false);
         setUserName(user.username);
-        fetchMessages(user.username)
+        //fetchMessages(user.username)
 
     }
 
@@ -27,10 +31,10 @@ function Dialog({dialog, currentUser, setChat, setUserName, fetchMessages}) {
             {user &&
             <li className="person" data-chat="person1" onClick={() => showChat()}>
                 <div className="user">
-                    <img src={user.profile_image?.file} alt="https://www.bootdey.com/img/Content/avatar/avatar3.png"/>
+                    <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png"/>
                 </div>
                 <p className="name-time">
-                    <span className="name">{user.username}</span>
+                    <span className="name">{user.user_name}</span>
                 </p>
             </li>
             }</>
