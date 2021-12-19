@@ -20,7 +20,7 @@ const DialogList = (props) => {
     useEffect(() => {
 
         if(props.location.state !== undefined){
-            setUserName(props.location.state.ID);
+            console.log(props.location.state.ID);
             //fetchMessages(props.location.state.user_ID);
         }
         ChatService.getDialogs(token['tennisbro-token']).then(
