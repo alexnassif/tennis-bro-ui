@@ -42,11 +42,11 @@ const DialogList = (props) => {
         })
     }, [])
 
-    function fetchMessages(id) {
+    function fetchMessages(u_id) {
         setMessages([]);
-        http.get(`localhost:8080/message-api/messages/${id}`, {
+        http.get(`/message-api/messages/${u_id}`, {
             headers: {
-                'Authorization': `Token ${token['tennisbro-token']}`
+                'Authorization': `Bearer ${token['tennisbro-token']}`
             }
         }).then(
             function (response) {

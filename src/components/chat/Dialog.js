@@ -22,7 +22,7 @@ function Dialog({dialog, currentUser, setChat, setUserName, fetchMessages}) {
     function showChat() {
         setChat(false);
         setUserName(user.ID);
-        //fetchMessages(user.ID)
+        fetchMessages(user.ID)
 
     }
 
