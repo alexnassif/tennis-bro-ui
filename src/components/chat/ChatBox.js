@@ -33,7 +33,7 @@ class ChatBox extends Component {
             messages: props.messages,
         };
 
-        this.chatSocket = getSocket();
+        this.chatSocket = getSocket(props.token);
         // this.fetchMessages = this.fetchMessages.bind(this);
 
     }
