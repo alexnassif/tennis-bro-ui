@@ -11,17 +11,19 @@ function Dialog({dialog, currentUser, setChat, setUserName, fetchMessages}) {
 
         console.log(currentUser);
         if (User1.ID === parseInt(currentUser)) {
-            
+            console.log(User2);
+            console.log(currentUser);
             setUser(User2);
             
         } else {
+            console.log(User1);
+            console.log(currentUser);
             setUser(User1);
         }
     }, [])
 
     function showChat() {
         setChat(false);
-        setUserName(user.ID);
         fetchMessages(user.ID)
 
     }

@@ -13,7 +13,7 @@ const DialogList = (props) => {
     const [profileId] = useCookies(['profile_id']);
     const [dialogs, setDialogs] = useState([]);
     const [chat, setChat] = useState(false);
-    const [userName, setUserName] = useState();
+    const [userName, setUserName] = useCookies(['user_name']);
 
     const [messages, setMessages] = useState([]);
 
@@ -51,12 +51,12 @@ const DialogList = (props) => {
         }).then(
             function (response) {
                 console.log(response.data);
-                /*for (const m of response.data) {
-                    const mDate = new Date(m.timestamp);
-                    let message = {user: m.user, text: m.body, date: mDate.toDateString(), time: mDate.toLocaleTimeString(), recipient: m.recipient};
+                for (const m of response.data) {
+                    const mDate = new Date(m.CreatedAt);
+                    let message = {user: m.Sender.user_name, text: m.Body, date: mDate.toDateString(), time: mDate.toLocaleTimeString(), recipient: m.Recipient.user_name};
                     setMessages(messages => [...messages, message])
                 }
-                setChat(true);*/
+                setChat(true);
             }
         ).catch(
             function (err) {
@@ -86,7 +86,7 @@ const DialogList = (props) => {
                 <div className="col-md-8">
 
                     {chat &&
-                    <Chat username={userName} messages={messages}/>
+                    <Chat username={userName['user_name']} messages={messages}/>
                     }
 
                 </div>

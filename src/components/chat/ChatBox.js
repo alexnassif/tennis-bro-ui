@@ -9,7 +9,7 @@ import "../../styling/messages.css";
 
 const Chat = ({messages, username}) => {
     //const [id] = useCookies(['user_id']);
-    const [token, , deleteToken] = useCookies(['synkup-token']);
+    const [token, deleteToken] = useCookies(['tennisbro-token']);
    const recipient = null;
     return <ChatBox messages={messages} username={username} token={token['tennisbro-token']} 
                     recipient={recipient}/>
@@ -71,7 +71,7 @@ class ChatBox extends Component {
         const messageInput = <MessageInput username={this.props.username} socket={this.chatSocket}/>;
         const messageAlign = this.state.messages.map((item, index) => {
             console.log(item)
-                if (item.user.id === parseInt(this.props.userId)) {
+                if (item.user === this.props.username) {
 
                     return (
 
