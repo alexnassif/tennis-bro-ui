@@ -34,41 +34,68 @@ class ChatBox extends Component {
         };
 
         this.chatSocket = getSocket(props.token);
+        this.sendPrivateMessage = this.sendPrivateMessage.bind(this);
         // this.fetchMessages = this.fetchMessages.bind(this);
 
     }
 
     componentDidMount() {
         //this.fetchMessages(this.props.username);
+        this.chatSocket.addEventListener('open', (event) => { this.onWebsocketOpen(event) });
+        this.chatSocket.addEventListener('message', (event) => { this.handleNewMessage(event) });
         const ctx = this;
-        this.chatSocket.onmessage = (e) => {
-            const id = JSON.parse(e.data).message;
-            console.log(id, ' from onmessage')
-            http.get(`http://127.0.0.1:8000/chatapi/message/${id}/`,
-                {
-                    headers: {
-                        'Authorization': `Token ${this.props.token}`
-                    }
-                }
-            ).then(function (response) {
+        
+    }
 
-                console.log(ctx.state.messages);
-                let m = response.data;
-                const mDate = new Date(m.timestamp);
-                let message = {user: m.user, text: m.body, date: mDate.toDateString(), time: mDate.toLocaleTimeString(), recipient: m.recipient};
-                ctx.setState((prevState) => ({messages: prevState.messages.concat(message)}));
-            }).catch(function (err) {
-                console.log(err)
-            })
+    sendPrivateMessage(message1){
+        if (message1 !== "") {
+          this.chatSocket.send(JSON.stringify({
+            action: 'private-message',
+            message: message1,
+            receiver: 1,
+          }));
+          //room.newMessage = "";
+        }
+      }
 
+    handleNewMessage(event) {
+        console.log(event.data);
+        let data = event.data;
+        data = data.split(/\r?\n/);
+  
+        /*for (let i = 0; i < data.length; i++) {
+          let msg = JSON.parse(data[i]);
+          switch (msg.action) {
+            case "send-message":
+              this.handleChatMessage(msg);
+              break;
+            case "user-join":
+              this.handleUserJoined(msg);
+              break;
+            case "user-left":
+              this.handleUserLeft(msg);
+              break;
+            case "room-joined":
+              this.handleRoomJoined(msg);
+              break;
+            case "private-message":
+              console.log(msg);
+              break;
+            default:
+              break;
+          }
+        }*/
+      }
 
-        };
+    onWebsocketOpen(event) {
+        console.log("connected to WS!");
+        console.log(this.state.target);
     }
 
     render() {
 
         const {messages} = this.state;
-        const messageInput = <MessageInput username={this.props.username} socket={this.chatSocket}/>;
+        const messageInput = <MessageInput username={this.props.username} socket={this.chatSocket} sendPrivateMessage={this.sendPrivateMessage}/>;
         const messageAlign = this.state.messages.map((item, index) => {
             console.log(item)
                 if (item.user === this.props.username) {

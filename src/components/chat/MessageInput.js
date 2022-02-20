@@ -23,16 +23,7 @@ function MessageInput(props) {
         //   message,
         // }));
 
-        http.post('http://127.0.0.1:8000/chatapi/message/', {
-                "recipient": username,
-                "body": message,
-            },
-            {
-                headers: {
-                    'Authorization': `Token ${token['synkup-token']}`
-                }
-            }
-        )
+        props.sendPrivateMessage(message)
     }
 
     function handleSubmission() {
