@@ -7,10 +7,10 @@ import MessagesList from "./MessagesList";
 import "../../styling/messages.css";
 
 
-const Chat = ({messages, username}) => {
+const Chat = ({messages, username, receiver}) => {
     //const [id] = useCookies(['user_id']);
     const [token, deleteToken] = useCookies(['tennisbro-token']);
-   const recipient = null;
+   const recipient = receiver;
     return <ChatBox messages={messages} username={username} token={token['tennisbro-token']} 
                     recipient={recipient}/>
 }
@@ -31,6 +31,7 @@ class ChatBox extends Component {
         console.log(props.messages)
         this.state = {
             messages: props.messages,
+            recipient: props.recipient,
         };
 
         this.chatSocket = getSocket(props.token);
@@ -52,7 +53,7 @@ class ChatBox extends Component {
           this.chatSocket.send(JSON.stringify({
             action: 'private-message',
             message: message1,
-            receiver: 1,
+            receiver: this.state.recipient,
           }));
           //room.newMessage = "";
         }

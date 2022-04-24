@@ -16,6 +16,7 @@ const DialogList = (props) => {
     const [userName, setUserName] = useCookies(['user_name']);
 
     const [messages, setMessages] = useState([]);
+    const [recipient, setRecipient] = useState("");
 
     useEffect(() => {
 
@@ -44,6 +45,7 @@ const DialogList = (props) => {
 
     function fetchMessages(u_id) {
         setMessages([]);
+        setRecipient(u_id);
         http.get(`/message-api/messages/${u_id}`, {
             headers: {
                 'Authorization': `Bearer ${token['tennisbro-token']}`
@@ -86,7 +88,7 @@ const DialogList = (props) => {
                 <div className="col-md-8">
 
                     {chat &&
-                    <Chat username={userName['user_name']} messages={messages}/>
+                    <Chat username={userName['user_name']} messages={messages} receiver={recipient}/>
                     }
 
                 </div>
