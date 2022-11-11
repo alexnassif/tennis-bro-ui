@@ -119,7 +119,7 @@ class ChatBox extends Component {
                             <div className="chat-avatar">{/*
                                 "https://www.bootdey.com/img/Content/avatar/avatar3.png"*/}
                                 <img src={item.user.profile_image?.file} alt="Retail Admin"/>
-                                <div className="chat-name">{this.props.username}</div>
+                                <div className="chat-name">{item.user}</div>
                             </div>
                             <div className="chat-text">{item.text}</div>
                             <div className="chat-hour">{item.date}</div>
