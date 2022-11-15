@@ -60,14 +60,13 @@ class ChatBox extends Component {
       }
 
     handleNewMessage(event) {
-        console.log(event.data);
         let data = event.data;
         data = data.split(/\r?\n/);
   
-        /*for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length; i++) {
           let msg = JSON.parse(data[i]);
           switch (msg.action) {
-            case "send-message":
+            /**case "send-message":
               this.handleChatMessage(msg);
               break;
             case "user-join":
@@ -78,14 +77,14 @@ class ChatBox extends Component {
               break;
             case "room-joined":
               this.handleRoomJoined(msg);
-              break;
+              break;**/
             case "private-message":
               console.log(msg);
               break;
             default:
               break;
           }
-        }*/
+        }
       }
 
     onWebsocketOpen(event) {
