@@ -3,15 +3,13 @@ import MessageInput from './MessageInput';
 
 import {useCookies} from "react-cookie";
 import http from "../../http-axios"
-import MessagesList from "./MessagesList";
 import "../../styling/messages.css";
 
 
-const Chat = ({messages, username, receiver}) => {
-    //const [id] = useCookies(['user_id']);
-    const [token, deleteToken] = useCookies(['tennisbro-token']);
+const Chat = ({username, receiver}) => {
+    const [token] = useCookies(['tennisbro-token']);
    const recipient = receiver;
-    return <ChatBox messages={messages} username={username} token={token['tennisbro-token']} 
+    return <ChatBox username={username} token={token['tennisbro-token']} 
                     recipient={recipient}/>
 }
 
@@ -20,7 +18,6 @@ function getSocket(token) {
     const chatSocket = new WebSocket(
         socketPath,
     );
-    console.log(chatSocket);
     return chatSocket;
 }
 
@@ -28,24 +25,51 @@ function getSocket(token) {
 class ChatBox extends Component {
     constructor(props) {
         super(props);
-        console.log(props.messages)
         this.state = {
-            messages: props.messages,
+            messages: [],
             recipient: props.recipient,
+            token: props.token,
         };
 
         this.chatSocket = getSocket(props.token);
         this.sendPrivateMessage = this.sendPrivateMessage.bind(this);
-        // this.fetchMessages = this.fetchMessages.bind(this);
+        this.fetchMessages = this.fetchMessages.bind(this);
 
     }
 
     componentDidMount() {
-        //this.fetchMessages(this.props.username);
         this.chatSocket.addEventListener('open', (event) => { this.onWebsocketOpen(event) });
         this.chatSocket.addEventListener('message', (event) => { this.handleNewMessage(event) });
-        const ctx = this;
+        this.fetchMessages(this.state.recipient);
         
+    }
+
+    fetchMessages(u_id) {
+        let that = this;
+        http.get(`/message-api/messages/${u_id}`, {
+            headers: {
+                Authorization: `Bearer ${this.state.token}`
+            }
+        }).then(
+            function (response) {
+                let {messages} = that.state;
+                var tempMessages = [];
+                for (const m of response.data) {
+                    const mDate = new Date(m.CreatedAt);
+                    let message = {user: m.Sender.user_name, text: m.Body, date: mDate.toDateString(), time: mDate.toLocaleTimeString(), recipient: m.Recipient.user_name};
+                    tempMessages.push(message);
+                }
+
+                that.setState({messages: tempMessages});
+
+            }
+        ).catch(
+            function (err) {
+                console.log(err);
+            }
+        )
+
+
     }
 
     sendPrivateMessage(message1){
@@ -96,7 +120,8 @@ class ChatBox extends Component {
 
         const {messages} = this.state;
         const messageInput = <MessageInput username={this.props.username} socket={this.chatSocket} sendPrivateMessage={this.sendPrivateMessage}/>;
-        const messageAlign = this.state.messages.map((item, index) => {
+
+        const messageAlign = messages.map((item, index) => {
             console.log(item)
                 if (item.user === this.props.username) {
 

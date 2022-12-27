@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import Chat from "./ChatBox";
-import ChatService from "./ChatService";
 
 
-function Dialog({dialog, currentUser, setChat, setUserName, fetchMessages}) {
+function Dialog({dialog, currentUser, setChat, setReceiver}) {
     const {User1, User2} = dialog;
     const [user, setUser] = useState(null);
 
@@ -11,20 +9,16 @@ function Dialog({dialog, currentUser, setChat, setUserName, fetchMessages}) {
 
         console.log(currentUser);
         if (User1.ID === parseInt(currentUser)) {
-            console.log(User2);
-            console.log(currentUser);
             setUser(User2);
             
         } else {
-            console.log(User1);
-            console.log(currentUser);
             setUser(User1);
         }
     }, [])
 
     function showChat() {
         setChat(false);
-        fetchMessages(user.ID)
+        setReceiver(user.ID)
 
     }
 

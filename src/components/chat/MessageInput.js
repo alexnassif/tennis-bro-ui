@@ -1,6 +1,5 @@
 import React, {useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import http from "../../http-axios"
 import {useCookies} from "react-cookie";
 import "../../index.css";
 
