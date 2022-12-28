@@ -29,11 +29,13 @@ class ChatBox extends Component {
             messages: [],
             recipient: props.recipient,
             token: props.token,
+            username : props.username,
         };
 
         this.chatSocket = getSocket(props.token);
         this.sendPrivateMessage = this.sendPrivateMessage.bind(this);
         this.fetchMessages = this.fetchMessages.bind(this);
+        this.addMessage = this.addMessage.bind(this);
 
     }
 
@@ -53,6 +55,7 @@ class ChatBox extends Component {
         }).then(
             function (response) {
                 let {messages} = that.state;
+                console.log(response.data);
                 var tempMessages = [];
                 for (const m of response.data) {
                     const mDate = new Date(m.CreatedAt);
@@ -70,6 +73,14 @@ class ChatBox extends Component {
         )
 
 
+    }
+
+    addMessage(m){
+        const {messages, username} = this.state;
+        const mDate = new Date(m.CreatedAt);
+        let message = {user: m.sender.user_name, text: m.message, date: mDate.toDateString(), time: mDate.toLocaleTimeString(), recipient: username};
+        messages.push(message);
+        this.setState({messages: messages});
     }
 
     sendPrivateMessage(message1){
@@ -103,7 +114,7 @@ class ChatBox extends Component {
               this.handleRoomJoined(msg);
               break;**/
             case "private-message":
-              console.log(msg);
+              this.addMessage(msg);
               break;
             default:
               break;
